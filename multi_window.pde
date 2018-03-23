@@ -20,48 +20,15 @@ class ControlFrame extends PApplet {
     surface.setLocation(10, 10);
     cp5 = new ControlP5(this);
     
-    cp5.addColorWheel("editc" , 250 , 10 , 200 )
+    cp5.addColorWheel("editc" , 20 , 10 , 200 )
+        .plugTo(parent)
+        //.plugTo(ef)
         .setRGB(color(128,0,255,255));
-       
-    cp5.addKnob("blend")
-       .plugTo(parent, "cframe")
-       .setPosition(100, 300)
-       .setSize(200, 200)
-       .setRange(0, 100)
-       .setValue(50);
-       
-    cp5.addNumberbox("color-red")
-       .plugTo(parent, "c0")
-       .setRange(0, 255)
-       .setValue(255)
-       .setPosition(100, 10)
-       .setSize(100, 20);
-       
-    cp5.addNumberbox("color-green")
-       .plugTo(parent, "c1")
-       .setRange(0, 255)
-       .setValue(128)
-       .setPosition(100, 70)
-       .setSize(100, 20);
-       
-    cp5.addNumberbox("color-blue")
-       .plugTo(parent, "c2")
-       .setRange(0, 255)
-       .setValue(0)
-       .setPosition(100, 130)
-       .setSize(100, 20);
-       
-    cp5.addSlider("speed")
-       .plugTo(parent, "speed")
-       .setRange(0, 0.1)
-       .setValue(0.01)
-       .setPosition(100, 240)
-       .setSize(200, 30);
        
   }
 
   void draw() {
-    background(190);
+    background(120);
   }
 }
 
@@ -70,7 +37,7 @@ class EditFrame extends PApplet {
   int w, h;
   PApplet parent;
 
-  public EditFrame(PApplet _parent, int _w, int _h, String _name) {
+  public EditFrame(PApplet _parent, int _w, int _h, byte[][] canv) {
     super();   
     parent = _parent;
     w=_w;
@@ -83,11 +50,14 @@ class EditFrame extends PApplet {
   }
 
   public void setup() {
-    surface.setLocation(10, 10);
+    surface.setLocation(600, 600);
        
   }
-
+  
+  
+  color editc= color(100);
+  
   void draw() {
-    background(190);
+    background(editc);
   }
 }

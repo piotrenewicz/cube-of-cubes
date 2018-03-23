@@ -1,5 +1,6 @@
 import controlP5.*;
 ControlFrame cf;
+EditFrame ef;
 
 //steeldef  t,x,y,z
 
@@ -14,6 +15,7 @@ void setup(){
   //strokeWeight(3);
   //stroke(0, 255, 0);
   cf = new ControlFrame(this, 400, 800, "Controls");
+  //ef = new EditFrame(this, 200, 200, "Controls");        //this is mad, cuz it needs a cut clip to create,  don't launch it at boot, only after a spawn button has been pressed;
   noStroke();
   
   a = new Clip(100, 100, 10, 10, 3);
@@ -119,52 +121,63 @@ class Clip{
     data[t][x][y][z][3] = byte(alpha(c)-128);
   }
   
-  byte[][][] Access2D(char cut1, char cut2, int val1, int val2){
+  byte[][][] Access2D(byte cut1, byte cut2, int val1, int val2){
     byte[][][] out = new byte[0][0][0];
     if(cut1!=cut2){
       byte in[][][][] = Access3D(cut1, val1);
       
-      if(cut2=='t'){
+      if(cut2==0){
         out = in[val2];
       }
       else{
-        if(cut1=='t'){
-          out = new byte[][][4];
- 
-        }      
+        if(cut2==1){
+          out = new byte[in.length][in[0][0].length][4];
+          for(int i=0; i>in.length;i++){
+            out[i] = in[i][val2];
+          }
+        }
+        
+        if(cut2==2){
+          out = new byte[in.length][in[0].length][4];
+          for(int i1=0; i1>in.length;i1++){
+            for(int i2=0; i2>in[0].length;i2++){
+              out[i1][i2] = in[i1][i2][val2];
+            }
+          }
+        }
       }
     }
     return out;
   }
   
-  byte[][][][] Access3D(char cut, int val){
+  byte[][][][] Access3D(byte cut, int val){
     byte[][][][] out = new byte[0][0][0][0];
     
-    if(cut == 't'){
+    if(cut == 0){
       out = data[val];
     }
     
-    if(cut == 'x'){
-      out = new byte[dimt][dimy][dimz][4];
-      for(int i = 0; i<dimt; i++){
+    if(cut == 1){
+      out = new byte[data.length][data[0][0].length][data[0][0][0].length][4];
+      for(int i = 0; i<data.length; i++){
         out[i] = data[i][val];
       }
     }
     
-    if(cut == 'y'){
-      out = new byte[dimt][dimx][dimz][4];
-      for(int i1 = 0; i1<dimt; i1++){
-        for(int i2 = 0; i2<dimx; i2++){
+    if(cut == 2){
+      out = new byte[data.length][data[0].length][data[0][0][0].length][4];
+      for(int i1 = 0; i1<data.length; i1++){
+        for(int i2 = 0; i2<data[0].length; i2++){
           out[i1][i2] = data[i1][i2][val];
         }
       }
     }
     
-    if(cut == 'z'){
-      out = new byte[dimt][dimx][dimy][4];
-      for(int i1 = 0; i1<dimt; i1++){
-        for(int i2 = 0; i2<dimx; i2++){
-          for(int i3 = 0; i3<dimy; i3++){  
+    if(cut == 3){
+      out = new byte[data.length][data[0].length][data[0][0].length][4];
+      for(int i1 = 0; i1<data.length; i1++){
+        for(int i2 = 0; i2<data[0].length; i2++){
+          for(int i3 = 0; i3<data[0][0].length; i3++){  
             out[i1][i2][i3] = data[i1][i2][i3][val];
           }
         }
